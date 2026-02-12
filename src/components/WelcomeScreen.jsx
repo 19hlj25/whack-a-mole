@@ -1,8 +1,6 @@
-import { useGame } from "./game/GameContent";
- 
-import GameBoard from "./components/GameBoard";
+import { useGame } from "../game/GameContent";
 
- function WelcomeScreen (){
+export function WelcomeScreen (){
     const { startGame } = useGame();
 
     return (
@@ -18,20 +16,4 @@ import GameBoard from "./components/GameBoard";
         </div>
         </>
     )
-}
-
-
-function AppInner() {
-  const { phase } = useGame();
-  return (
-    phase === "welcome" ? <WelcomeScreen /> : <GameBoard />
-  )
-}
-
-export default function App() {
-  return (
-    <>
-      <WelcomeScreen/>
-    </>
-  )
 }
