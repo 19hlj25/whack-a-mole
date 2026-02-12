@@ -12,7 +12,8 @@ export function GameProvider({ children }) {
   const [phase, setPhase] = useState("welcome"); // "welcome" | "playing"
   const [score, setScore] = useState(0);
   const [moleIndex, setMoleIndex] = useState(() => getRandomHoleIndex(HoleCount));
-
+  const [highscore, setHighscore] = useState([])
+  
   function startGame() {
     setScore(0);
     setMoleIndex(getRandomHoleIndex(HoleCount));
@@ -28,6 +29,10 @@ export function GameProvider({ children }) {
     setMoleIndex(getRandomHoleIndex(HoleCount));
   }
 
+  function handleHighScore(){
+    setHighscore(prevHighscore=>[...prevHighscore, score])
+  }
+
   const value = useMemo(
     () => ({
       HoleCount,
@@ -37,6 +42,9 @@ export function GameProvider({ children }) {
       startGame,
       restartGame,
       whackMole,
+      highscore,
+      setHighscore,
+      handleHighScore,
     }),
     [phase, score, moleIndex]
   );
@@ -44,7 +52,7 @@ export function GameProvider({ children }) {
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }
 
-export function useGame() {
+export function  useGame() {
   const ctx = useContext(GameContext);
   if (!ctx) throw new Error("useGame must be used inside <GameProvider>");
   return ctx;
